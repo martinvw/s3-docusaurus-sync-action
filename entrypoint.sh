@@ -23,12 +23,6 @@ if [ -z "$AWS_DEFAULT_REGION" ]; then
 fi
 
 
-if [ -z "$PROJECT_NAME" ]; then
-  echo "PROJECT_NAME is not set. Quitting."
-  exit 1
-fi
-
-
 mkdir -p ~/.aws
 touch ~/.aws/credentials
 
@@ -47,7 +41,7 @@ echo "Run yarn build"
 yarn run build
 
 echo "Copying to website folder"
-aws s3 sync ./build/${PROJECT_NAME} s3://${AWS_S3_BUCKET} --exact-timestamps --delete --region ${AWS_DEFAULT_REGION} $*
+aws s3 sync ./build s3://${AWS_S3_BUCKET} --exact-timestamps --delete --region ${AWS_DEFAULT_REGION} $*
 
 echo "Cleaning up things"
 
